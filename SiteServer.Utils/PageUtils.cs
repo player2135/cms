@@ -262,9 +262,17 @@ namespace SiteServer.Utils
             return Combine(ApplicationPath, relatedUrl);
         }
 
-        public static string GetTemporaryFilesUrl(string relatedUrl)
+        public static string HttpContextRootDomain
         {
-            return Combine(ApplicationPath, DirectoryUtils.SiteFiles.DirectoryName, DirectoryUtils.SiteFiles.TemporaryFiles, relatedUrl);
+            get
+            {
+                var url = HttpContext.Current.Request.Url;
+
+                if (url.HostNameType != UriHostNameType.Dns) return url.Host;
+
+                var match = Regex.Match(url.Host, "([^.]+\\.[^.]{1,3}(\\.[^.]{1,3})?)$");
+                return match.Groups[1].Success ? match.Groups[1].Value : null;
+            }
         }
 
         public static NameValueCollection GetQueryString(string url)
@@ -871,9 +879,19 @@ namespace SiteServer.Utils
             return GetSiteFilesUrl(Combine(DirectoryUtils.SiteFiles.Plugins, pluginId, url));
         }
 
+        public static string GetSiteServerUrl(string className)
+        {
+            return GetAdminDirectoryUrl(className.ToCamelCase() + ".cshtml");
+        }
+
         public static string GetSiteServerUrl(string className, NameValueCollection queryString)
         {
             return AddQueryString(GetAdminDirectoryUrl(className.ToLower() + ".aspx"), queryString);
+        }
+
+        public static string GetPluginsUrl(string className)
+        {
+            return GetAdminDirectoryUrl(Combine("plugins", className.ToCamelCase() + ".cshtml"));
         }
 
         public static string GetPluginsUrl(string className, NameValueCollection queryString)
@@ -881,9 +899,19 @@ namespace SiteServer.Utils
             return AddQueryString(GetAdminDirectoryUrl(Combine("plugins", className.ToLower() + ".aspx")), queryString);
         }
 
+        public static string GetSettingsUrl(string className)
+        {
+            return GetAdminDirectoryUrl(Combine("settings", className.ToCamelCase() + ".cshtml"));
+        }
+
         public static string GetSettingsUrl(string className, NameValueCollection queryString)
         {
             return AddQueryString(GetAdminDirectoryUrl(Combine("settings", className.ToLower() + ".aspx")), queryString);
+        }
+
+        public static string GetCmsUrl(string className)
+        {
+            return GetAdminDirectoryUrl(Combine("cms", className.ToCamelCase() + ".cshtml"));
         }
 
         public static string GetCmsUrl(int siteId, string className, NameValueCollection queryString)

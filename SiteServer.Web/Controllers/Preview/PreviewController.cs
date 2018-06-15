@@ -126,9 +126,8 @@ namespace SiteServer.API.Controllers.Preview
 
             if (templateInfo.TemplateType == TemplateType.FileTemplate)           //单页
             {
-                var fileContentBuilder = new StringBuilder(TemplateManager.GetTemplateContent(siteInfo, templateInfo));
                 Parser.Parse(pageInfo, contextInfo, contentBuilder, visualInfo.FilePath, true);
-                return Response(fileContentBuilder.ToString(), siteInfo);
+                return Response(contentBuilder.ToString(), siteInfo);
             }
             if (templateInfo.TemplateType == TemplateType.IndexPageTemplate || templateInfo.TemplateType == TemplateType.ChannelTemplate)        //栏目页面
             {
@@ -227,7 +226,7 @@ namespace SiteServer.API.Controllers.Preview
                     var stlElement = StlParserUtility.GetStlElement(StlPageChannels.ElementName, stlLabelList);
                     var stlElementTranslated = StlParserManager.StlEncrypt(stlElement);
 
-                    var pageChannelsElementParser = new StlPageChannels(stlElement, pageInfo, contextInfo, false);
+                    var pageChannelsElementParser = new StlPageChannels(stlElement, pageInfo, contextInfo);
                     int totalNum;
                     var pageCount = pageChannelsElementParser.GetPageCount(out totalNum);
 
@@ -362,7 +361,7 @@ namespace SiteServer.API.Controllers.Preview
                     var stlElement = StlParserUtility.GetStlElement(StlPageChannels.ElementName, stlLabelList);
                     var stlElementTranslated = StlParserManager.StlEncrypt(stlElement);
 
-                    var pageChannelsElementParser = new StlPageChannels(stlElement, pageInfo, contextInfo, false);
+                    var pageChannelsElementParser = new StlPageChannels(stlElement, pageInfo, contextInfo);
                     int totalNum;
                     var pageCount = pageChannelsElementParser.GetPageCount(out totalNum);
 

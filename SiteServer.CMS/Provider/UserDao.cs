@@ -12,6 +12,7 @@ using SiteServer.Utils.Auth;
 using SiteServer.Plugin;
 using SiteServer.Utils;
 using SiteServer.Utils.Enumerations;
+using Dapper.Contrib.Extensions;
 
 namespace SiteServer.CMS.Provider
 {
@@ -19,182 +20,182 @@ namespace SiteServer.CMS.Provider
     {
         public override string TableName => "siteserver_User";
 
-        public override List<TableColumnInfo> TableColumns => new List<TableColumnInfo>
+        public override List<TableColumn> TableColumns => new List<TableColumn>
         {
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Id),
+                AttributeName = nameof(UserInfo.Id),
                 DataType = DataType.Integer,
                 IsIdentity = true,
                 IsPrimaryKey = true
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.UserName),
+                AttributeName = nameof(UserInfo.UserName),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Password),
+                AttributeName = nameof(UserInfo.Password),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.PasswordFormat),
+                AttributeName = nameof(UserInfo.PasswordFormat),
                 DataType = DataType.VarChar,
-                Length = 50
+                DataLength = 50
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.PasswordSalt),
+                AttributeName = nameof(UserInfo.PasswordSalt),
                 DataType = DataType.VarChar,
-                Length = 128
+                DataLength = 128
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.CreateDate),
+                AttributeName = nameof(UserInfo.CreateDate),
                 DataType = DataType.DateTime
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.LastResetPasswordDate),
+                AttributeName = nameof(UserInfo.LastResetPasswordDate),
                 DataType = DataType.DateTime
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.LastActivityDate),
+                AttributeName = nameof(UserInfo.LastActivityDate),
                 DataType = DataType.DateTime
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.CountOfLogin),
+                AttributeName = nameof(UserInfo.CountOfLogin),
                 DataType = DataType.Integer
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.CountOfFailedLogin),
+                AttributeName = nameof(UserInfo.CountOfFailedLogin),
                 DataType = DataType.Integer
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.CountOfWriting),
+                AttributeName = nameof(UserInfo.CountOfWriting),
                 DataType = DataType.Integer
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.IsChecked),
+                AttributeName = nameof(UserInfo.IsChecked),
                 DataType = DataType.VarChar,
-                Length = 18
+                DataLength = 18
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.IsLockedOut),
+                AttributeName = nameof(UserInfo.IsLockedOut),
                 DataType = DataType.VarChar,
-                Length = 18
+                DataLength = 18
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.DisplayName),
+                AttributeName = nameof(UserInfo.DisplayName),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Email),
+                AttributeName = nameof(UserInfo.Email),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Mobile),
+                AttributeName = nameof(UserInfo.Mobile),
                 DataType = DataType.VarChar,
-                Length = 20
+                DataLength = 20
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.AvatarUrl),
+                AttributeName = nameof(UserInfo.AvatarUrl),
                 DataType = DataType.VarChar,
-                Length = 200
+                DataLength = 200
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Organization),
+                AttributeName = nameof(UserInfo.Organization),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Department),
+                AttributeName = nameof(UserInfo.Department),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Position),
+                AttributeName = nameof(UserInfo.Position),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Gender),
+                AttributeName = nameof(UserInfo.Gender),
                 DataType = DataType.VarChar,
-                Length = 50
+                DataLength = 50
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Birthday),
+                AttributeName = nameof(UserInfo.Birthday),
                 DataType = DataType.VarChar,
-                Length = 50
+                DataLength = 50
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Education),
+                AttributeName = nameof(UserInfo.Education),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Graduation),
+                AttributeName = nameof(UserInfo.Graduation),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Address),
+                AttributeName = nameof(UserInfo.Address),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.WeiXin),
+                AttributeName = nameof(UserInfo.WeiXin),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Qq),
+                AttributeName = nameof(UserInfo.Qq),
                 DataType = DataType.VarChar,
-                Length = 50
+                DataLength = 50
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.WeiBo),
+                AttributeName = nameof(UserInfo.WeiBo),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Interests),
+                AttributeName = nameof(UserInfo.Interests),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             },
-            new TableColumnInfo
+            new TableColumn
             {
-                ColumnName = nameof(UserInfo.Signature),
+                AttributeName = nameof(UserInfo.Signature),
                 DataType = DataType.VarChar,
-                Length = 255
+                DataLength = 255
             }
         };
 
@@ -1451,9 +1452,45 @@ SELECT COUNT(*) AS AddNum, AddYear FROM (
         {
             var sqlString =
                 DataProvider.DatabaseDao.GetPageSqlString(TableName, "*", string.Empty, "ORDER BY Id", offset, limit);
+
             using (var connection = GetConnection())
             {
                 return connection.Query<UserInfo>(sqlString).ToList();
+            }
+        }
+
+        public UserInfo ApiGetUser(int id)
+        {
+            var sqlString = $"SELECT * FROM {TableName} WHERE Id = @Id";
+
+            using (var connection = GetConnection())
+            {
+                return connection.QuerySingleOrDefault<UserInfo>(sqlString, new { Id = id });
+            }
+        }
+
+        public bool ApiIsExists(int id)
+        {
+            var sqlString = $"SELECT count(1) FROM {TableName} WHERE Id = @Id";
+
+            using (var connection = GetConnection())
+            {
+                return connection.ExecuteScalar<bool>(sqlString, new { Id = id });
+            }
+        }
+
+        public void ApiUpdateUser(int id, UserInfo userInfoToUpdate)
+        {
+            var userInfo = ApiGetUser(id);
+
+            userInfoToUpdate.PasswordFormat = userInfo.PasswordFormat;
+            userInfoToUpdate.Password = userInfo.Password;
+            userInfoToUpdate.PasswordSalt = userInfo.PasswordSalt;
+            userInfoToUpdate.CreateDate = userInfo.CreateDate;
+
+            using (var connection = GetConnection())
+            {
+                connection.Update(userInfoToUpdate);
             }
         }
 
@@ -1471,11 +1508,11 @@ SELECT COUNT(*) AS AddNum, AddYear FROM (
                 userInfo.LastActivityDate = DateTime.Now;
                 userInfo.LastResetPasswordDate = DateUtils.SqlMinValue;
 
-                const string sqlString = "INSERT INTO siteserver_User (UserName, Password, PasswordFormat, PasswordSalt, CreateDate, LastResetPasswordDate, LastActivityDate, CountOfLogin, CountOfFailedLogin, CountOfWriting, IsChecked, IsLockedOut, DisplayName, Email, Mobile, AvatarUrl, Organization, Department, Position, Gender, Birthday, Education, Graduation, Address, WeiXin, QQ, WeiBo, Interests, Signature) VALUES (@UserName, @Password, @PasswordFormat, @PasswordSalt, @CreateDate, @LastResetPasswordDate, @LastActivityDate, @CountOfLogin, @CountOfFailedLogin, @CountOfWriting, @IsChecked, @IsLockedOut, @DisplayName, @Email, @Mobile, @AvatarUrl, @Organization, @Department, @Position, @Gender, @Birthday, @Education, @Graduation, @Address, @WeiXin, @QQ, @WeiBo, @Interests, @Signature)";
+                //const string sqlString = "INSERT INTO siteserver_User (UserName, Password, PasswordFormat, PasswordSalt, CreateDate, LastResetPasswordDate, LastActivityDate, CountOfLogin, CountOfFailedLogin, CountOfWriting, IsChecked, IsLockedOut, DisplayName, Email, Mobile, AvatarUrl, Organization, Department, Position, Gender, Birthday, Education, Graduation, Address, WeiXin, QQ, WeiBo, Interests, Signature) VALUES (@UserName, @Password, @PasswordFormat, @PasswordSalt, @CreateDate, @LastResetPasswordDate, @LastActivityDate, @CountOfLogin, @CountOfFailedLogin, @CountOfWriting, @IsChecked, @IsLockedOut, @DisplayName, @Email, @Mobile, @AvatarUrl, @Organization, @Department, @Position, @Gender, @Birthday, @Education, @Graduation, @Address, @WeiXin, @QQ, @WeiBo, @Interests, @Signature)";
 
                 using (var connection = GetConnection())
                 {
-                    connection.Execute(sqlString, userInfo);
+                    connection.Insert(userInfo);
                 }
 
                 IpAddressCache(ipAddress);

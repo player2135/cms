@@ -1038,6 +1038,15 @@ namespace SiteServer.Utils
             return retval;
         }
 
+        public static string ToCamelCase(this string str)
+        {
+            if (!string.IsNullOrEmpty(str) && str.Length > 1)
+            {
+                return Char.ToLowerInvariant(str[0]) + str.Substring(1);
+            }
+            return str;
+        }
+
         public static string ToJsString(string value)
         {
             var retval = string.Empty;
@@ -1058,13 +1067,44 @@ namespace SiteServer.Utils
             return InputTypeUtils.IsPureString(inputType) ? ParseString(content, replace, to, startIndex, length, wordNum, ellipsis, isClearTags, isReturnToBr, isLower, isUpper, formatString) : content;
         }
 
+        private static string ParseReplace(string parsedContent, string replace, string to)
+        {
+            if (replace.IndexOf(',') != -1)
+            {
+                var replaceList = TranslateUtils.StringCollectionToStringList(replace);
+                var toList = TranslateUtils.StringCollectionToStringList(to);
+
+                if (replaceList.Count == toList.Count)
+                {
+                    for (var i = 0; i < replaceList.Count; i++)
+                    {
+                        parsedContent = parsedContent.Replace(replaceList[i], toList[i]);
+                    }
+
+                    return parsedContent;
+                }
+            }
+
+            string retval;
+            if (replace.StartsWith("/") && replace.EndsWith("/"))
+            {
+                retval = RegexUtils.Replace(replace.Trim('/'), parsedContent, to);
+            }
+            else
+            {
+                retval = parsedContent.Replace(replace, to);
+            }
+
+            return retval;
+        }
+
         public static string ParseString(string content, string replace, string to, int startIndex, int length, int wordNum, string ellipsis, bool isClearTags, bool isReturnToBr, bool isLower, bool isUpper, string formatString)
         {
             var parsedContent = content;
 
             if (!string.IsNullOrEmpty(replace))
             {
-                parsedContent = Replace(replace, parsedContent, to);
+                parsedContent = ParseReplace(parsedContent, replace, to);
             }
 
             if (isClearTags)
